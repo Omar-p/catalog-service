@@ -1,9 +1,12 @@
 package com.polarbookshop.catalogservice.domain;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Repository
 public class InMemoryBookRepository implements BookRepository {
 
     private final Map<String, Book> books = new HashMap<>();
