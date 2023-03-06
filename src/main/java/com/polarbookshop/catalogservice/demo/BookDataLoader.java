@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @Profile({"local", "testdata"})
 public class BookDataLoader {
@@ -19,8 +21,12 @@ public class BookDataLoader {
 
   @EventListener(ApplicationReadyEvent.class)
   public void load() {
-    bookRepository.save(new Book("978-3-16-148410-0", "Refactoring", "Martin Fowler", 47.99));
-    bookRepository.save(new Book("978-0-321-35668-0", "Clean Code", "Robert C. Martin", 43.99));
-    bookRepository.save(new Book("978-0-13-235088-4", "The Pragmatic Programmer", "Andrew Hunt", 31.99));
+    bookRepository.deleteAll();
+    var books = List.of(
+        Book.of("978-3-16-148410-0", "Refactoring", "Martin Fowler", 47.99),
+        Book.of("978-0-321-35668-0", "Clean Code", "Robert C. Martin", 43.99),
+        Book.of("978-0-13-235088-4", "The Pragmatic Programmer", "Andrew Hunt", 31.99)
+    );
+    bookRepository.saveAll(books);
   }
 }
