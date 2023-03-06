@@ -1,10 +1,13 @@
 package com.polarbookshop.catalogservice;
 
 import com.polarbookshop.catalogservice.domain.Book;
+import com.polarbookshop.catalogservice.domain.BookRepository;
 import org.assertj.core.api.BDDAssertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -15,15 +18,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 )
 @TestPropertySource(properties = {
 		"spring.cloud.config.fail-fast=false",
-		"spring.cloud.config.request-connect-timeout=0",
+		"spring.cloud.config.request-connect-timeout=1",
 })
+@Profile("integration")
 class CatalogServiceApplicationTests {
 
 	@Autowired
 	private WebTestClient webTestClient;
 
+	@Autowired
+	private BookRepository bookRepository;
+
+	@BeforeEach
+	void beforeAll() {
+		bookRepository.deleteAll();
+	}
+
 
 	@Test
+	@Rollback
 	void whenPostBook_thenBookIsAdded() {
 		Book book = Book.of("9780321146533", "A valid title", "A valid author", 10.0);
 		webTestClient
