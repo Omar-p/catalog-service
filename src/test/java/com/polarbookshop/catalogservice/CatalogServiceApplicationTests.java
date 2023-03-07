@@ -38,7 +38,7 @@ class CatalogServiceApplicationTests {
 	@Test
 	@Rollback
 	void whenPostBook_thenBookIsAdded() {
-		Book book = Book.of("9780321146533", "A valid title", "A valid author", 10.0);
+		Book book = Book.of("9780321146533", "A valid title", "A valid author", 10.0, "O'Reilly");
 		webTestClient
 				.post()
 				.uri("/books")
@@ -52,6 +52,7 @@ class CatalogServiceApplicationTests {
 					assertThat(responseBook.title()).isEqualTo(book.title());
 					assertThat(responseBook.author()).isEqualTo(book.author());
 					assertThat(responseBook.price()).isEqualTo(book.price());
+					assertThat(responseBook.publisher()).isEqualTo(book.publisher());
 					assertThat(responseBook.createdDate()).isNotNull();
 					assertThat(responseBook.lastModifiedDate()).isNotNull();
 					assertThat(responseBook.version()).isEqualTo(1);
