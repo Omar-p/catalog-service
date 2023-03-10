@@ -11,4 +11,5 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 /postgres-data
+!build/libs/*.jar
 
