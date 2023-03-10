@@ -1,6 +1,6 @@
 services:
   catalog-service:
-    image: ghcr.io/omar-p/catalog-service:latest
+    image: ghcr.io/omar-p/catalog-service:0.0.1
     ports:
       - "9001:9001"
     restart: "always"
