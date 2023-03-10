@@ -1,0 +1,24 @@
+services:
+  catalog-service:
+    image: ghcr.io/omar-p/catalog-service:latest
+    ports:
+      - "9001:9001"
+    restart: "always"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://polar-db:5432/polardb_catalog
+  polar-db:
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    restart: "always"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: polardb_catalog
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+networks:
+  catalog-network:
+    driver: bridge
+
